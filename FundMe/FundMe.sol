@@ -10,6 +10,11 @@ contract FundMe {
 
     address[] public funders;
     mapping(address => uint256)  public fundersMap;
+    address public immutable contractOwner;
+
+    constructor() {
+        contractOwner = msg.sender;
+    }
 
     function fund() public payable {
         require(msg.value.get_conversion_rate() >= MINIMUM_USD, "Didn't send enough ETH!");

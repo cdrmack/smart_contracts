@@ -16,7 +16,7 @@ library PriceConverter {
 
         // https://docs.chain.link/data-feeds/api-reference#getrounddata
         (, int256 answer,,,) = priceFeed.latestRoundData();
-        return uint256(answer * 1e10);
+        return uint256(answer * 1e10); // TODO: I think this should not be hardcoded, use .decimals()?
     }
 
     function get_conversion_rate(uint256 ethAmount) public view returns (uint256) {
