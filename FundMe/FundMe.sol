@@ -54,4 +54,13 @@ contract FundMe {
         (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
         require(callSuccess, "Withdraw with `call` has failed");
     }
+
+    // https://solidity-by-example.org/fallback/
+    fallback() external payable {
+        fund();
+    }
+
+    receive() external payable {
+        fund();
+    }
 }
