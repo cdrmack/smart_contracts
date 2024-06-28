@@ -3,6 +3,8 @@ pragma solidity ^0.8.0;
 
 import {PriceConverter} from "./PriceConverter.sol";
 
+error FundMe__NotOwner();
+
 contract FundMe {
     using PriceConverter for uint256;
 
@@ -26,7 +28,14 @@ contract FundMe {
         return funders.length;
     }
 
-    function withdraw() public {
+    modifier onlyOwner() {
+        if (msg.sender != contractOwner) {
+            revert FundMe__NotOwner();
+        }
+        _;
+    }
+
+    function withdraw() public onlyOwner {
         for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
             address funder = funders[funderIndex];
             fundersMap[funder] = 0; // I think we should keep information who funded how much, even after withdraw
